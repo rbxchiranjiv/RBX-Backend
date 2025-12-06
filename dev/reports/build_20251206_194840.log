@@ -1,0 +1,42 @@
+﻿npm : npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a 
+good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+At line:1 char:1
++ npm ci 2>&1 | Out-File -FilePath "dev/reports/build_20251206_194840.l ...
++ ~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (npm warn deprec...e and powerful.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+npm warn deprecated @npmcli/move-file@1.1.2: This functionality has been moved to @npmcli/fs
+npm warn deprecated npmlog@6.0.2: This package is no longer supported.
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated supertest@6.3.3: Please upgrade to supertest v7.1.3+, see release notes at 
+https://github.com/forwardemail/supertest/releases/tag/v7.1.3 - maintenance is supported by Forward Email @ https://forwardemail.net
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated are-we-there-yet@3.0.1: This package is no longer supported.
+npm warn deprecated multer@1.4.4-lts.1: Multer 1.x is impacted by a number of vulnerabilities, which have been patched in 2.x. You should 
+upgrade to the latest 2.x version.
+npm warn deprecated gauge@4.0.4: This package is no longer supported.
+npm warn deprecated superagent@8.1.2: Please upgrade to superagent v10.2.2+, see release notes at 
+https://github.com/forwardemail/superagent/releases/tag/v10.2.2 - maintenance is supported by Forward Email @ https://forwardemail.net
+
+added 806 packages, and audited 807 packages in 43s
+
+112 packages are looking for funding
+  run `npm fund` for details
+
+19 vulnerabilities (7 low, 1 moderate, 11 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+
+> rbx-backend@1.0.0 build
+> nest build
+

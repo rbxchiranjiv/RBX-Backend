@@ -1,0 +1,930 @@
+﻿
+> rbx-backend@1.0.0 test
+> jest --runInBand
+
+npm : FAIL src/integration/__tests__/leaderboard.integration.test.ts (9.703 s)
+At line:1 char:1
++ npm test -- --runInBand 2>&1 | Out-File -FilePath "dev/reports/test_2 ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL src/integr...st.ts (9.703 s):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  ÔùÅ Console
+
+    console.debug
+      MatchEntity.roomId before patch { optionsType: [Function: Object], designType: 'Object' }
+
+      at patchColumnDesignTypes (src/services/test-utils.ts:35:13)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ GET /api/v1/leaderboard/global ÔÇ║ should return global leaderboard
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:13.268+05:30', '2025-12-06T20:28:13.268+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'1afbc0d0-0465-4184-bea4-807820b412c9', '6e782bce-2a18-48c0-a71c-44ec043b789b', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ GET /api/v1/leaderboard/global ÔÇ║ should handle pagination parameters
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:13.710+05:30', '2025-12-06T20:28:13.710+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'a052d03a-33c6-49b0-885d-cc11d4ebbc37', '6a17857d-02c5-44ca-9894-4ef12a67240c', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ GET /api/v1/leaderboard/global ÔÇ║ should handle sorting parameters
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:13.830+05:30', '2025-12-06T20:28:13.830+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'d9c24c3d-9509-4710-9dfc-1a3cbbc040bc', '6026cfee-9f9b-4f1b-b1ab-b0ae08428e04', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ GET /api/v1/leaderboard/season/:seasonId ÔÇ║ should return season leaderboard
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:13.941+05:30', '2025-12-06T20:28:13.941+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'82630bf3-cbe5-43d6-8f97-6ffffbf729b9', '8d3ca48d-bd82-4bd3-aa0a-cdb1984f5626', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ GET /api/v1/leaderboard/tournament/:tournamentId ÔÇ║ should return tournament leaderboard
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:14.042+05:30', '2025-12-06T20:28:14.042+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'48fa2bf2-a294-4796-9d3c-0da548ed92a8', 'cafab684-412e-4c05-b584-2f079b878b35', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ GET /api/v1/leaderboard/tournament/:tournamentId ÔÇ║ should handle tournament not found
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:14.134+05:30', '2025-12-06T20:28:14.134+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'377b43c4-536c-4332-beef-8bb99e1cba3a', '15235ba8-97f1-4e62-8a12-b0c173300106', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ GET /api/v1/leaderboard/standings/:tournamentId ÔÇ║ should return tournament standings
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:14.238+05:30', '2025-12-06T20:28:14.238+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'eb667805-89eb-43c0-881a-eeda4671b2c3', '838739ce-8449-40ec-a7d7-f473da2123a9', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ GET /api/v1/leaderboard/season-stats/:participantId ÔÇ║ should return season stats for team
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:14.327+05:30', '2025-12-06T20:28:14.327+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'76bfb97a-39d1-4cb7-93f9-eda47de750b1', 'd7887177-a68b-48cf-8db5-e612be2cd514', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ GET /api/v1/leaderboard/season-stats/:participantId ÔÇ║ should return season stats for player
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:14.425+05:30', '2025-12-06T20:28:14.425+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'aa0d1161-e416-4fcc-870a-7fde9a9945d1', 'b9189a19-58da-4cc5-8aad-75d54e2ff307', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ GET /api/v1/leaderboard/season-stats/:participantId ÔÇ║ should return null for non-existent 
+participant
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:14.520+05:30', '2025-12-06T20:28:14.520+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'5fab39dc-ecba-438e-a5dd-41479572ac2c', '83f37b0d-308a-4ee8-b494-b0d359d6a981', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ GET /api/v1/leaderboard/top-season-stats ÔÇ║ should return top season stats
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:14.610+05:30', '2025-12-06T20:28:14.610+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'491fe895-8d31-47c1-bd38-75b423dd1d7b', 'a9d270e7-a2f4-4b0b-a469-b71c0304f33d', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ POST /api/v1/leaderboard/refresh ÔÇ║ should refresh leaderboard as admin
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:14.698+05:30', '2025-12-06T20:28:14.698+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'a800f519-1f0f-44d4-844d-482e77b62bea', '625b0996-538d-43df-bb2f-9552fc1d92b6', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ POST /api/v1/leaderboard/refresh ÔÇ║ should reject refresh without authentication
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:14.785+05:30', '2025-12-06T20:28:14.785+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'8e3fc3cd-5071-4c69-b22f-7d66a655fe51', 'e02c1336-19ad-4c71-a91b-089e8c8fd5fb', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ GET /api/v1/leaderboard/history/:participantId ÔÇ║ should return participant season history
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:14.872+05:30', '2025-12-06T20:28:14.872+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'831043b8-84db-4d46-bb6b-870f1014c3a5', '1b156068-3ec0-4397-a26c-a930e7f653a4', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ GET /api/v1/leaderboard/season/:seasonId/summary ÔÇ║ should return season summary
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:14.965+05:30', '2025-12-06T20:28:14.965+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'19afe5e0-f205-4ebd-b85e-89cd152529fa', '72b24d78-b41f-4f39-8f20-72bd70340357', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ Cache behavior ÔÇ║ should cache leaderboard responses
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:15.057+05:30', '2025-12-06T20:28:15.057+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'4606b020-e47e-4f92-9235-03efd47d7761', '60ca0dd3-c76d-4c70-a5f4-39f3fb09f96a', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ Cache behavior ÔÇ║ should invalidate cache on refresh
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:15.152+05:30', '2025-12-06T20:28:15.152+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'e1010332-f392-4e4a-93ba-e3d7c496aa46', 'fd3d3117-d11b-4ffd-a0dd-bcdda0adb617', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ Error handling ÔÇ║ should handle invalid query parameters
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:15.243+05:30', '2025-12-06T20:28:15.243+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'7fdb0b55-1369-46d3-9f12-b3c9d754851a', '6420ce54-40ca-4e9e-a187-9f41c536142d', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ Error handling ÔÇ║ should handle missing required parameters
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:15.328+05:30', '2025-12-06T20:28:15.328+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'2125023f-7d71-4798-a84f-266284897c73', '1c5c73c2-0121-4a82-9e96-ffd3159667d7', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+  ÔùÅ Leaderboard Integration Tests ÔÇ║ Error handling ÔÇ║ should handle pagination limits
+
+    QueryFailedError: null value in column "tournamentId" violates not-null constraint
+
+    ­ƒÉ£ This seems to be an execution error, which means that your request syntax seems okay,
+        but the resulting statement cannot be executed ÔåÆ Probably not a pg-mem error.
+
+    *´©ÅÔâú Failed SQL statement: INSERT INTO "registrations"("id", "createdAt", "updatedAt", "deletedAt", "status", "paymentStatus", 
+"amountPaid", "invitedSlot", "reshufflesUsed", "metadata", "teamId", "playerId", "tournamentId") VALUES (DEFAULT, 
+'2025-12-06T20:28:15.414+05:30', '2025-12-06T20:28:15.414+05:30', DEFAULT, 'confirmed', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 
+'90c6bc64-d04f-4856-bf39-4441e9486c4e', '44385682-b8a7-445e-9c65-9233959c7d11', DEFAULT) RETURNING "id", "createdAt", "updatedAt", 
+"deletedAt", "status", "paymentStatus", "amountPaid", "invitedSlot", "reshufflesUsed";
+
+    ƒæë You can file an issue at https://github.com/oguimbal/pg-mem along with a way to reproduce this error (if you can), and  the 
+stacktrace:
+
+      at PostgresQueryRunner.query (src/driver/postgres/PostgresQueryRunner.ts:331:19)
+      at InsertQueryBuilder.execute (src/query-builder/InsertQueryBuilder.ts:163:33)
+      at SubjectExecutor.executeInsertOperations (src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (src/persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (src/integration/__tests__/leaderboard.integration.test.ts:117:20)
+
+PASS src/integration/__tests__/match-lifecycle.integration.test.ts (7.872 s)
+  ÔùÅ Console
+
+    console.debug
+      MatchEntity.roomId before patch { optionsType: [Function: Object], designType: 'Object' }
+
+      at patchColumnDesignTypes (src/services/test-utils.ts:35:13)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+PASS src/integration/__tests__/auth.integration.test.ts
+  ÔùÅ Console
+
+    console.debug
+      MatchEntity.roomId before patch { optionsType: [Function: Object], designType: 'Object' }
+
+      at patchColumnDesignTypes (src/services/test-utils.ts:35:13)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+PASS src/integration/__tests__/api.integration.test.ts
+  ÔùÅ Console
+
+    console.debug
+      MatchEntity.roomId before patch { optionsType: [Function: Object], designType: 'Object' }
+
+      at patchColumnDesignTypes (src/services/test-utils.ts:35:13)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+PASS src/services/__tests__/notification.service.test.ts
+  ÔùÅ Console
+
+    console.debug
+      MatchEntity.roomId before patch { optionsType: [Function: Object], designType: 'Object' }
+
+      at patchColumnDesignTypes (src/services/test-utils.ts:35:13)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+    console.debug
+      Test entities: [
+        'UserEntity',
+        'TeamEntity',
+        'TournamentEntity',
+        'RegistrationEntity',
+        'StandingEntity',
+        'SeasonStatsEntity',
+        'LeaderboardSnapshotEntity',
+        'MatchEntity',
+        'MatchProofEntity',
+        'MatchDisputeEntity',
+        'PaymentRecordEntity',
+        'NotificationEntity',
+        'RefreshTokenEntity',
+        'EscrowAccountEntity',
+        'LedgerEntryEntity',
+        'WebhookEventEntity',
+        'PayoutBatchEntity',
+        'PayoutTransactionEntity'
+      ]
+
+      at createTestDataSource (src/services/test-utils.ts:96:11)
+
+PASS src/services/__tests__/standings.service.test.ts
+PASS src/services/__tests__/wallet.service.test.ts
+PASS src/services/__tests__/leaderboard.service.test.ts
+PASS src/services/__tests__/payout.service.test.ts
+PASS src/services/__tests__/escrow.service.test.ts
+
+Test Suites: 1 failed, 9 skipped, 9 passed, 10 of 19 total
+Tests:       20 failed, 156 skipped, 43 passed, 219 total
+Snapshots:   0 total
+Time:        37.068 s
+Ran all test suites.
