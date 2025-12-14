@@ -1,0 +1,40 @@
+{
+  "repo": {
+    "branch": "unknown",
+    "commit": "unknown",
+    "lastCommitMessages": []
+  },
+  "envNeeded": {
+    "NODE_ENV": "development",
+    "PORT": "4000",
+    "DATABASE_URL": "postgresql://rbx:password@localhost:5432/rbx",
+    "REDIS_URL": "redis://localhost:6379",
+    "MONGO_URL": "mongodb://localhost:27017/rbx_logs",
+    "JWT_SECRET": "change_me",
+    "JWT_REFRESH_SECRET": "change_me_refresh",
+    "RATE_LIMIT_REDIS_URL": "redis://localhost:6379",
+    "PAYTM_MERCHANT_ID": "test_merchant_id",
+    "PAYTM_MERCHANT_KEY": "test_merchant_key",
+    "PAYTM_WEBHOOK_SECRET": "test_webhook_secret",
+    "RAZORPAY_KEY_ID": "test_razorpay_key_id",
+    "RAZORPAY_KEY_SECRET": "test_razorpay_key_secret",
+    "RAZORPAY_WEBHOOK_SECRET": "test_razorpay_webhook_secret",
+    "RAZORPAYX_KEY_ID": "test_razorpayx_key_id",
+    "RAZORPAYX_KEY_SECRET": "test_razorpayx_key_secret",
+    "RAZORPAYX_ACCOUNT_NUMBER": "test_account_number"
+  },
+  "scripts": {
+    "validateConfig": "tsc --noEmit",
+    "test": "jest",
+    "testIntegration": "jest --runInBand src/integration/__tests__",
+    "migrateStatus": "npm run migrate:run",
+    "startDev": "nest start --watch"
+  },
+  "entities": [],
+  "migrations": [],
+  "services": [],
+  "controllers": [],
+  "tests": [],
+  "pendingActions": [],
+  "topFilesToInspect": []
+}

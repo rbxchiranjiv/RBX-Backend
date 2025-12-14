@@ -1,0 +1,66 @@
+import { Column, Entity, ManyToMany, OneToMany } from 'typeorm';
+import { BaseEntity } from './base.entity';
+import { TournamentEntity } from './tournament.entity';
+import { TeamEntity } from './team.entity';
+import { PaymentRecordEntity } from './payment-record.entity';
+import { NotificationEntity } from './notification.entity';
+import { RefreshTokenEntity } from './refresh-token.entity';
+import { MatchProofEntity } from './match-proof.entity';
+import { MatchDisputeEntity } from './match-dispute.entity';
+import { RegistrationEntity } from './registration.entity';
+
+export type UserRole = 'player' | 'organizer' | 'admin';
+
+@Entity({ name: 'users' })
+export class UserEntity extends BaseEntity {
+  @Column({ length: 80 })
+  displayName!: string;
+
+  @Column({ length: 20, unique: true })
+  phoneNumber!: string;
+
+  @Column({ length: 120, unique: true, nullable: true })
+  email?: string | null;
+
+  @Column({ type: 'enum', enum: ['player', 'organizer', 'admin'], default: 'player' })
+  role!: UserRole;
+
+  @Column({ length: 8, nullable: true })
+  countryCode?: string | null;
+
+  @Column({ length: 120, nullable: true })
+  deviceId?: string | null;
+
+  @Column({ default: false })
+  kycVerified!: boolean;
+
+  @OneToMany(() => TournamentEntity, (tournament: TournamentEntity) => tournament.organizer)
+  tournamentsOrganized!: TournamentEntity[];
+
+  @OneToMany(() => TeamEntity, (team: TeamEntity) => team.owner)
+  teamsOwned!: TeamEntity[];
+
+  @ManyToMany(() => TeamEntity, (team: TeamEntity) => team.members)
+  teamMemberships!: TeamEntity[];
+
+  @OneToMany(() => PaymentRecordEntity, (payment: PaymentRecordEntity) => payment.user)
+  payments!: PaymentRecordEntity[];
+
+  @OneToMany(() => NotificationEntity, (notification: NotificationEntity) => notification.user)
+  notifications!: NotificationEntity[];
+
+  @OneToMany(() => RefreshTokenEntity, (token: RefreshTokenEntity) => token.user)
+  refreshTokens!: RefreshTokenEntity[];
+
+  @OneToMany(() => MatchProofEntity, proof => proof.uploader)
+  matchProofs!: MatchProofEntity[];
+
+  @OneToMany(() => MatchDisputeEntity, (dispute: MatchDisputeEntity) => dispute.complainantUser)
+  matchDisputesFiled!: MatchDisputeEntity[];
+
+  @OneToMany(() => MatchDisputeEntity, (dispute: MatchDisputeEntity) => dispute.resolvedBy)
+  matchDisputesResolved!: MatchDisputeEntity[];
+
+  @OneToMany(() => RegistrationEntity, (registration: RegistrationEntity) => registration.player)
+  registrations!: RegistrationEntity[];
+}

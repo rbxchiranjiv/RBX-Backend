@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+
+# IDE
+.idea/
+
+# environment
+.env
+
+# build artifacts
+dist/
+coverage/
+
+# temp & logs
+tmp/
+temp/
+audit_logs/
+audit_outputs/
+audit_patches/
+audit_reports/
+
+# backup artifacts (IMPORTANT)
+audit_backups/
