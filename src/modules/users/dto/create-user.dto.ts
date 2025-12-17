@@ -7,20 +7,23 @@ import {
   IsString,
   Matches,
   MinLength,
+  IsUrl,
 } from 'class-validator';
 import { UserRole } from '../../../database/entities/user.entity';
 
 export class CreateUserDto {
+  @IsOptional()
   @IsString()
   @MinLength(3)
-  displayName!: string;
+  displayName?: string;
 
   @IsEmail()
   email!: string;
 
+  @IsOptional()
   @IsString()
   @Matches(/^\+?[0-9]{8,15}$/)
-  phoneNumber!: string;
+  phoneNumber?: string;
 
   @IsString()
   @MinLength(8)
@@ -45,6 +48,10 @@ export class CreateUserDto {
   @IsOptional()
   @IsBoolean()
   marketingOptIn?: boolean;
+
+  @IsOptional()
+  @IsUrl()
+  avatarUrl?: string;
 
   @IsOptional()
   @IsObject()

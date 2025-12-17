@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Request } from 'express';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -8,11 +10,20 @@ export class UsersController {
 
   @Post()
   create(@Body() payload: CreateUserDto) {
-    return this.usersService.create(payload);
+    return this.usersService.createUser(payload);
+  }
+
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  me(@Req() req: Request) {
+    if (!req.user) {
+      throw new UnauthorizedException('Missing authenticated user');
+    }
+    return this.usersService.getProfile(req.user.id);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+    return this.usersService.getProfile(id);
   }
 }

@@ -1,33 +1,62 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { GLOBAL_CONFIG } from '../../common/providers/global-config.provider';
-import type { GlobalConfig } from 'types/globalConfig';
-import { SendOtpDto } from './dto/send-otp.dto';
-import { VerifyOtpDto } from './dto/verify-otp.dto';
+import {
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcryptjs';
 
-export interface AuthServicePort {
-  sendOtp(payload: SendOtpDto): Promise<{ message: string }>;
-  verifyOtp(payload: VerifyOtpDto): Promise<{ message: string; token: string }>;
+import { UsersService, SafeUser } from '../users/users.service';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { LoginDto } from './dto/login.dto';
+import { UserStatus } from '../../database/entities/user.entity';
+
+const JWT_EXPIRY = '15m';
+const JWT_SECRET = process.env.JWT_SECRET ?? 'dev-secret';
+
+export interface AuthResponse {
+  user: SafeUser;
+  accessToken: string;
 }
 
 @Injectable()
-export class AuthService implements AuthServicePort {
-  constructor(@Inject(GLOBAL_CONFIG) private readonly config: GlobalConfig) {}
+export class AuthService {
+  constructor(private readonly usersService: UsersService, private readonly jwtService: JwtService) {}
 
-  async sendOtp(payload: SendOtpDto) {
-    // TODO: hook into SMS gateway listed in env + config
-    return {
-      message: this.config.notifications.templates.thirtyMinReminder.replace(
-        '{{matchCode}}',
-        payload.channel,
-      ),
-    };
+  async register(dto: CreateUserDto): Promise<AuthResponse> {
+    const user = await this.usersService.createUser(dto);
+    const accessToken = this.signAccessToken(user.id, user.role);
+    return { user, accessToken };
   }
 
-  async verifyOtp(payload: VerifyOtpDto) {
-    // TODO: validate OTP, issue JWT using config.security values
-    return {
-      message: this.config.textContent.welcomeBanner,
-      token: 'stub-token',
-    };
+  async login(dto: LoginDto): Promise<AuthResponse> {
+    const user = await this.usersService.findForAuth(dto.email);
+
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    const passwordMatches = await bcrypt.compare(dto.password, user.passwordHash);
+    if (!passwordMatches) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    if (user.status === UserStatus.SUSPENDED) {
+      throw new ForbiddenException('Account is suspended');
+    }
+
+    const safeUser = this.usersService.sanitizeUser(user);
+    const accessToken = this.signAccessToken(user.id, user.role);
+    return { user: safeUser, accessToken };
+  }
+
+  private signAccessToken(userId: string, role: string): string {
+    return this.jwtService.sign(
+      { sub: userId, role },
+      {
+        secret: JWT_SECRET,
+        expiresIn: JWT_EXPIRY,
+      },
+    );
   }
 }
