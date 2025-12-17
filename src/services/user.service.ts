@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { FindOptionsWhere, Repository } from 'typeorm';
 import { UserEntity, UserRole } from '../database/entities';
 import { ListOptions, PaginatedResult } from './types';
@@ -23,12 +24,13 @@ export class UserService {
       throw new ValidationError('displayName and phoneNumber are required to create a user.');
     }
 
-    await this.ensureUniqueFields(input.email, input.phoneNumber);
+    const normalizedEmail = input.email ?? undefined;
+    await this.ensureUniqueFields(normalizedEmail, input.phoneNumber);
 
     const user = this.userRepo.create({
       displayName: input.displayName,
       phoneNumber: input.phoneNumber,
-      email: input.email ?? null,
+      email: (normalizedEmail ?? this.generatePlaceholderEmail()).toLowerCase(),
       role: input.role ?? UserRole.PLAYER,
       countryCode: input.countryCode ?? null,
       deviceId: input.deviceId ?? null,
@@ -49,11 +51,39 @@ export class UserService {
   async update(id: string, input: UpdateUserInput): Promise<UserEntity> {
     const user = await this.findById(id);
 
-    if (input.email || input.phoneNumber) {
-      await this.ensureUniqueFields(input.email ?? user.email, input.phoneNumber ?? user.phoneNumber, id);
+    const normalizedEmail = input.email ?? undefined;
+    const normalizedPhone = input.phoneNumber ?? undefined;
+
+    if (normalizedEmail !== undefined || normalizedPhone !== undefined) {
+      const emailForCheck = normalizedEmail ?? user.email;
+      const phoneForCheck = normalizedPhone ?? user.phoneNumber ?? undefined;
+      await this.ensureUniqueFields(emailForCheck, phoneForCheck, id);
     }
 
-    this.userRepo.merge(user, input);
+    const payload: Partial<UserEntity> = {};
+    if (input.displayName !== undefined) {
+      payload.displayName = input.displayName;
+    }
+    if (normalizedEmail !== undefined) {
+      payload.email = normalizedEmail.toLowerCase();
+    }
+    if (normalizedPhone !== undefined) {
+      payload.phoneNumber = normalizedPhone;
+    }
+    if (input.role !== undefined) {
+      payload.role = input.role;
+    }
+    if (input.countryCode !== undefined) {
+      payload.countryCode = input.countryCode ?? null;
+    }
+    if (input.deviceId !== undefined) {
+      payload.deviceId = input.deviceId ?? null;
+    }
+    if (input.kycVerified !== undefined) {
+      payload.kycVerified = input.kycVerified;
+    }
+
+    this.userRepo.merge(user, payload);
     return this.userRepo.save(user);
   }
 
@@ -74,7 +104,7 @@ export class UserService {
     return { data, total, page, limit };
   }
 
-  private async ensureUniqueFields(email?: string | null, phoneNumber?: string | null, excludeId?: string) {
+  private async ensureUniqueFields(email?: string, phoneNumber?: string, excludeId?: string) {
     if (phoneNumber) {
       const existing = await this.userRepo.findOne({ where: { phoneNumber } });
       if (existing && existing.id !== excludeId) {
@@ -88,5 +118,9 @@ export class UserService {
         throw new ValidationError('Email already in use.');
       }
     }
+  }
+
+  private generatePlaceholderEmail(): string {
+    return `user-${randomUUID()}@rbx.local`;
   }
 }
