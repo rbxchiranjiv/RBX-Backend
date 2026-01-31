@@ -24,6 +24,7 @@ import {
   WebhookStatsDto,
 } from '../dto/webhook.dto';
 import { WebhookStatus } from '../database/entities/stream-webhook.entity';
+import { buildMessageResponse, buildSuccessResponse } from './http-utils';
 
 // @ApiTags('stream-webhooks')
 @Controller('stream-webhooks')
@@ -40,7 +41,8 @@ export class StreamWebhookController {
   // @ApiResponse({ status: 401, description: 'Unauthorized' })
   // @ApiResponse({ status: 403, description: 'Forbidden' })
   async createWebhook(@Body() createDto: CreateWebhookDto) {
-    return this.streamWebhookService.create(createDto);
+    const webhook = await this.streamWebhookService.create(createDto);
+    return buildSuccessResponse(webhook);
   }
 
   @Get(':id')
@@ -50,7 +52,8 @@ export class StreamWebhookController {
   // @ApiResponse({ status: 200, description: 'Webhook found' })
   // @ApiResponse({ status: 404, description: 'Webhook not found' })
   async getWebhook(@Param('id') id: string) {
-    return this.streamWebhookService.findById(id);
+    const webhook = await this.streamWebhookService.findById(id);
+    return buildSuccessResponse(webhook);
   }
 
   @Post(':id/deliver')
@@ -62,7 +65,8 @@ export class StreamWebhookController {
   // @ApiResponse({ status: 404, description: 'Webhook not found' })
   // @ApiResponse({ status: 400, description: 'Webhook is not in deliverable status' })
   async deliverWebhook(@Param('id') id: string) {
-    return this.streamWebhookService.deliverWebhook(id);
+    const result = await this.streamWebhookService.deliverWebhook(id);
+    return buildSuccessResponse(result);
   }
 
   @Post(':id/retry')
@@ -74,7 +78,8 @@ export class StreamWebhookController {
   // @ApiResponse({ status: 404, description: 'Webhook not found' })
   // @ApiResponse({ status: 400, description: 'Only failed webhooks can be retried' })
   async retryWebhook(@Param('id') id: string) {
-    return this.streamWebhookService.retryWebhook(id);
+    const result = await this.streamWebhookService.retryWebhook(id);
+    return buildSuccessResponse(result);
   }
 
   @Post(':id/fail')
@@ -88,7 +93,8 @@ export class StreamWebhookController {
     @Param('id') id: string,
     @Body() failDto: FailWebhookDto
   ) {
-    return this.streamWebhookService.failWebhook(id, failDto.errorMessage);
+    const webhook = await this.streamWebhookService.failWebhook(id, failDto.errorMessage);
+    return buildSuccessResponse(webhook);
   }
 
   @Delete(':id')
@@ -101,7 +107,7 @@ export class StreamWebhookController {
   // @ApiResponse({ status: 400, description: 'Cannot delete webhook while processing' })
   async deleteWebhook(@Param('id') id: string) {
     await this.streamWebhookService.delete(id);
-    return { message: 'Webhook deleted successfully' };
+    return buildMessageResponse('Webhook deleted successfully');
   }
 
   @Get()
@@ -121,7 +127,8 @@ export class StreamWebhookController {
   // @ApiQuery({ name: 'sortOrder', required: false, description: 'Sort order' })
   // @ApiResponse({ status: 200, description: 'Webhooks retrieved successfully' })
   async getWebhooks(@Query() queryDto: WebhookQueryDto) {
-    return this.streamWebhookService.findMany(queryDto);
+    const webhooks = await this.streamWebhookService.findMany(queryDto);
+    return buildSuccessResponse(webhooks);
   }
 
   @Get('stream/:streamSessionId')
@@ -130,7 +137,8 @@ export class StreamWebhookController {
   // @ApiParam({ name: 'streamSessionId', description: 'Stream session ID' })
   // @ApiResponse({ status: 200, description: 'Webhooks retrieved successfully' })
   async getWebhooksByStream(@Param('streamSessionId') streamSessionId: string) {
-    return this.streamWebhookService.getWebhooksByStream(streamSessionId);
+    const webhooks = await this.streamWebhookService.getWebhooksByStream(streamSessionId);
+    return buildSuccessResponse(webhooks);
   }
 
   @Get('pending')
@@ -138,7 +146,8 @@ export class StreamWebhookController {
   // @ApiOperation({ summary: 'Get pending webhooks for delivery' })
   // @ApiResponse({ status: 200, description: 'Pending webhooks retrieved successfully' })
   async getPendingWebhooks() {
-    return this.streamWebhookService.getPendingWebhooks();
+    const pending = await this.streamWebhookService.getPendingWebhooks();
+    return buildSuccessResponse(pending);
   }
 
   @Get('stats')
@@ -146,6 +155,7 @@ export class StreamWebhookController {
   // @ApiOperation({ summary: 'Get webhook statistics' })
   // @ApiResponse({ status: 200, description: 'Webhook statistics retrieved successfully' })
   async getWebhookStats() {
-    return this.streamWebhookService.getWebhookStats();
+    const stats = await this.streamWebhookService.getWebhookStats();
+    return buildSuccessResponse(stats);
   }
 }

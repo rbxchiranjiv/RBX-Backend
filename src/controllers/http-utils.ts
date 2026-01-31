@@ -41,3 +41,24 @@ export function mapDomainError(error: unknown) {
   }
   return { status: 500, body: { success: false, error: { message: 'Internal server error' } } };
 }
+
+export interface SuccessResponse<T = unknown> {
+  success: true;
+  data: T;
+}
+
+export interface ErrorResponse {
+  success: false;
+  error: {
+    message: string;
+    code?: string;
+  };
+}
+
+export function buildSuccessResponse<T>(data: T): SuccessResponse<T> {
+  return { success: true, data };
+}
+
+export function buildMessageResponse(message: string): SuccessResponse<{ message: string }> {
+  return buildSuccessResponse({ message });
+}

@@ -29,6 +29,7 @@ import {
   HighlightStatsDto,
 } from '../dto/highlight.dto';
 import { HighlightStatus } from '../database/entities/highlight.entity';
+import { buildMessageResponse, buildSuccessResponse } from './http-utils';
 
 // @ApiTags('highlights')
 @Controller('highlights')
@@ -45,7 +46,8 @@ export class HighlightController {
   // @ApiResponse({ status: 401, description: 'Unauthorized' })
   // @ApiResponse({ status: 403, description: 'Forbidden' })
   async createHighlight(@Body() createDto: CreateHighlightDto) {
-    return this.highlightService.create(createDto);
+    const highlight = await this.highlightService.create(createDto);
+    return buildSuccessResponse(highlight);
   }
 
   @Get(':id')
@@ -55,7 +57,8 @@ export class HighlightController {
   // @ApiResponse({ status: 200, description: 'Highlight found' })
   // @ApiResponse({ status: 404, description: 'Highlight not found' })
   async getHighlight(@Param('id') id: string) {
-    return this.highlightService.findById(id);
+    const highlight = await this.highlightService.findById(id);
+    return buildSuccessResponse(highlight);
   }
 
   @Put(':id')
@@ -69,7 +72,8 @@ export class HighlightController {
     @Param('id') id: string,
     @Body() updateDto: UpdateHighlightDto
   ) {
-    return this.highlightService.update(id, updateDto as any);
+    const highlight = await this.highlightService.update(id, updateDto as any);
+    return buildSuccessResponse(highlight);
   }
 
   @Post(':id/complete')
@@ -84,7 +88,8 @@ export class HighlightController {
     @Param('id') id: string,
     @Body() completeDto: CompleteHighlightDto
   ) {
-    return this.highlightService.completeProcessing(id, completeDto);
+    const highlight = await this.highlightService.completeProcessing(id, completeDto);
+    return buildSuccessResponse(highlight);
   }
 
   @Post(':id/approve')
@@ -99,7 +104,12 @@ export class HighlightController {
     @Param('id') id: string,
     @Body() approveDto: ApproveHighlightDto
   ) {
-    return this.highlightService.approveHighlight(id, approveDto.approvedBy, approveDto.approvedAt ? new Date(approveDto.approvedAt) : undefined);
+    const highlight = await this.highlightService.approveHighlight(
+      id,
+      approveDto.approvedBy,
+      approveDto.approvedAt ? new Date(approveDto.approvedAt) : undefined,
+    );
+    return buildSuccessResponse(highlight);
   }
 
   @Post(':id/reject')
@@ -114,7 +124,8 @@ export class HighlightController {
     @Param('id') id: string,
     @Body() rejectDto: RejectHighlightDto
   ) {
-    return this.highlightService.rejectHighlight(id, rejectDto.approvedBy, rejectDto.rejectionReason);
+    const highlight = await this.highlightService.rejectHighlight(id, rejectDto.approvedBy, rejectDto.rejectionReason);
+    return buildSuccessResponse(highlight);
   }
 
   @Post(':id/publish')
@@ -126,7 +137,8 @@ export class HighlightController {
   // @ApiResponse({ status: 404, description: 'Highlight not found' })
   // @ApiResponse({ status: 400, description: 'Highlight must be approved before publishing' })
   async publishHighlight(@Param('id') id: string) {
-    return this.highlightService.publishHighlight(id);
+    const highlight = await this.highlightService.publishHighlight(id);
+    return buildSuccessResponse(highlight);
   }
 
   @Post(':id/fail')
@@ -141,7 +153,8 @@ export class HighlightController {
     @Param('id') id: string,
     @Body() failDto: FailHighlightDto
   ) {
-    return this.highlightService.failProcessing(id, failDto.errorMessage);
+    const highlight = await this.highlightService.failProcessing(id, failDto.errorMessage);
+    return buildSuccessResponse(highlight);
   }
 
   @Post(':id/engagement')
@@ -156,7 +169,7 @@ export class HighlightController {
     @Body() engagementDto: UpdateHighlightEngagementDto
   ) {
     await this.highlightService.updateEngagement(id, engagementDto);
-    return { message: 'Engagement metrics updated successfully' };
+    return buildMessageResponse('Engagement metrics updated successfully');
   }
 
   @Delete(':id')
@@ -169,7 +182,7 @@ export class HighlightController {
   // @ApiResponse({ status: 400, description: 'Cannot delete highlight while processing' })
   async deleteHighlight(@Param('id') id: string) {
     await this.highlightService.delete(id);
-    return { message: 'Highlight deleted successfully' };
+    return buildMessageResponse('Highlight deleted successfully');
   }
 
   @Get()
@@ -190,7 +203,8 @@ export class HighlightController {
   // @ApiQuery({ name: 'sortOrder', required: false, description: 'Sort order' })
   // @ApiResponse({ status: 200, description: 'Highlights retrieved successfully' })
   async getHighlights(@Query() queryDto: HighlightQueryDto) {
-    return this.highlightService.findMany(queryDto);
+    const highlights = await this.highlightService.findMany(queryDto);
+    return buildSuccessResponse(highlights);
   }
 
   @Get('stream/:streamSessionId')
@@ -199,7 +213,8 @@ export class HighlightController {
   // @ApiParam({ name: 'streamSessionId', description: 'Stream session ID' })
   // @ApiResponse({ status: 200, description: 'Highlights retrieved successfully' })
   async getHighlightsByStream(@Param('streamSessionId') streamSessionId: string) {
-    return this.highlightService.getHighlightsByStream(streamSessionId);
+    const highlights = await this.highlightService.getHighlightsByStream(streamSessionId);
+    return buildSuccessResponse(highlights);
   }
 
   @Get('player/:playerId')
@@ -208,7 +223,8 @@ export class HighlightController {
   // @ApiParam({ name: 'playerId', description: 'Player user ID' })
   // @ApiResponse({ status: 200, description: 'Highlights retrieved successfully' })
   async getHighlightsByPlayer(@Param('playerId') playerId: string) {
-    return this.highlightService.getHighlightsByPlayer(playerId);
+    const highlights = await this.highlightService.getHighlightsByPlayer(playerId);
+    return buildSuccessResponse(highlights);
   }
 
   @Get('pending')
@@ -216,7 +232,8 @@ export class HighlightController {
   // @ApiOperation({ summary: 'Get pending highlights for approval' })
   // @ApiResponse({ status: 200, description: 'Pending highlights retrieved successfully' })
   async getPendingHighlights() {
-    return this.highlightService.getPendingHighlights();
+    const highlights = await this.highlightService.getPendingHighlights();
+    return buildSuccessResponse(highlights);
   }
 
   @Get('stats')
@@ -225,6 +242,7 @@ export class HighlightController {
   // @ApiQuery({ name: 'createdBy', required: false, description: 'Filter by creator ID' })
   // @ApiResponse({ status: 200, description: 'Highlight statistics retrieved successfully' })
   async getHighlightStats(@Query() queryDto: HighlightStatsDto) {
-    return this.highlightService.getHighlightStats(queryDto.createdBy);
+    const stats = await this.highlightService.getHighlightStats(queryDto.createdBy);
+    return buildSuccessResponse(stats);
   }
 }

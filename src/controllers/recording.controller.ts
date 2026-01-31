@@ -28,6 +28,7 @@ import {
   RecordingStatsDto,
 } from '../dto/recording.dto';
 import { RecordingStatus } from '../database/entities/recording.entity';
+import { buildMessageResponse, buildSuccessResponse } from './http-utils';
 
 // @ApiTags('recordings')
 @Controller('recordings')
@@ -44,7 +45,8 @@ export class RecordingController {
   // @ApiResponse({ status: 401, description: 'Unauthorized' })
   // @ApiResponse({ status: 403, description: 'Forbidden' })
   async createRecording(@Body() createDto: CreateRecordingDto) {
-    return this.recordingService.create(createDto);
+    const recording = await this.recordingService.create(createDto);
+    return buildSuccessResponse(recording);
   }
 
   @Get(':id')
@@ -54,7 +56,8 @@ export class RecordingController {
   // @ApiResponse({ status: 200, description: 'Recording found' })
   // @ApiResponse({ status: 404, description: 'Recording not found' })
   async getRecording(@Param('id') id: string) {
-    return this.recordingService.findById(id);
+    const recording = await this.recordingService.findById(id);
+    return buildSuccessResponse(recording);
   }
 
   @Put(':id')
@@ -68,7 +71,8 @@ export class RecordingController {
     @Param('id') id: string,
     @Body() updateDto: UpdateRecordingDto
   ) {
-    return this.recordingService.update(id, updateDto as any);
+    const recording = await this.recordingService.update(id, updateDto as any);
+    return buildSuccessResponse(recording);
   }
 
   @Post(':id/start')
@@ -80,7 +84,8 @@ export class RecordingController {
   // @ApiResponse({ status: 404, description: 'Recording not found' })
   // @ApiResponse({ status: 400, description: 'Recording is not in initializing status' })
   async startRecording(@Param('id') id: string) {
-    return this.recordingService.startRecording(id);
+    const recording = await this.recordingService.startRecording(id);
+    return buildSuccessResponse(recording);
   }
 
   @Post(':id/stop')
@@ -92,7 +97,8 @@ export class RecordingController {
   // @ApiResponse({ status: 404, description: 'Recording not found' })
   // @ApiResponse({ status: 400, description: 'Recording is not in recording status' })
   async stopRecording(@Param('id') id: string) {
-    return this.recordingService.stopRecording(id);
+    const recording = await this.recordingService.stopRecording(id);
+    return buildSuccessResponse(recording);
   }
 
   @Post(':id/complete')
@@ -107,7 +113,8 @@ export class RecordingController {
     @Param('id') id: string,
     @Body() completeDto: CompleteRecordingDto
   ) {
-    return this.recordingService.completeRecording(id, completeDto);
+    const recording = await this.recordingService.completeRecording(id, completeDto);
+    return buildSuccessResponse(recording);
   }
 
   @Post(':id/fail')
@@ -122,7 +129,8 @@ export class RecordingController {
     @Param('id') id: string,
     @Body() failDto: FailRecordingDto
   ) {
-    return this.recordingService.failRecording(id, failDto.errorMessage);
+    const recording = await this.recordingService.failRecording(id, failDto.errorMessage);
+    return buildSuccessResponse(recording);
   }
 
   @Post(':id/clip-markers')
@@ -137,7 +145,7 @@ export class RecordingController {
     @Body() markerDto: AddClipMarkerDto
   ) {
     await this.recordingService.addClipMarker(id, markerDto);
-    return { message: 'Clip marker added successfully' };
+    return buildMessageResponse('Clip marker added successfully');
   }
 
   @Delete(':id')
@@ -150,7 +158,7 @@ export class RecordingController {
   // @ApiResponse({ status: 400, description: 'Cannot delete recording in progress' })
   async deleteRecording(@Param('id') id: string) {
     await this.recordingService.delete(id);
-    return { message: 'Recording deleted successfully' };
+    return buildMessageResponse('Recording deleted successfully');
   }
 
   @Get()
@@ -170,7 +178,8 @@ export class RecordingController {
   // @ApiQuery({ name: 'sortOrder', required: false, description: 'Sort order' })
   // @ApiResponse({ status: 200, description: 'Recordings retrieved successfully' })
   async getRecordings(@Query() queryDto: RecordingQueryDto) {
-    return this.recordingService.findMany(queryDto);
+    const recordings = await this.recordingService.findMany(queryDto);
+    return buildSuccessResponse(recordings);
   }
 
   @Get('stream/:streamSessionId')
@@ -179,7 +188,8 @@ export class RecordingController {
   // @ApiParam({ name: 'streamSessionId', description: 'Stream session ID' })
   // @ApiResponse({ status: 200, description: 'Recordings retrieved successfully' })
   async getRecordingsByStream(@Param('streamSessionId') streamSessionId: string) {
-    return this.recordingService.getRecordingsByStream(streamSessionId);
+    const recordings = await this.recordingService.getRecordingsByStream(streamSessionId);
+    return buildSuccessResponse(recordings);
   }
 
   @Get('stats')
@@ -188,6 +198,7 @@ export class RecordingController {
   // @ApiQuery({ name: 'recordedBy', required: false, description: 'Filter by recorder ID' })
   // @ApiResponse({ status: 200, description: 'Recording statistics retrieved successfully' })
   async getRecordingStats(@Query() queryDto: RecordingStatsDto) {
-    return this.recordingService.getRecordingStats(queryDto.recordedBy);
+    const stats = await this.recordingService.getRecordingStats(queryDto.recordedBy);
+    return buildSuccessResponse(stats);
   }
 }

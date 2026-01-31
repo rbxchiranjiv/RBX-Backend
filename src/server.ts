@@ -1,8 +1,10 @@
 import AppDataSource from './data-source';
 import { createApp } from './app';
+import { validateRequiredEnvVars } from './config/validate-env';
 
 async function bootstrap() {
   try {
+    validateRequiredEnvVars();
     if (!AppDataSource.isInitialized) {
       await AppDataSource.initialize();
     }

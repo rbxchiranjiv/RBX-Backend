@@ -29,6 +29,7 @@ import {
   UploadStatsDto,
 } from '../dto/cdn-upload.dto';
 import { UploadStatus } from '../database/entities/cdn-upload.entity';
+import { buildMessageResponse, buildSuccessResponse } from './http-utils';
 
 // @ApiTags('cdn-uploads')
 @Controller('cdn-uploads')
@@ -45,7 +46,8 @@ export class CdnUploadController {
   // @ApiResponse({ status: 401, description: 'Unauthorized' })
   // @ApiResponse({ status: 403, description: 'Forbidden' })
   async createUpload(@Body() createDto: CreateUploadDto) {
-    return this.cdnUploadService.create(createDto as any);
+    const upload = await this.cdnUploadService.create(createDto as any);
+    return buildSuccessResponse(upload);
   }
 
   @Get(':id')
@@ -55,7 +57,8 @@ export class CdnUploadController {
   // @ApiResponse({ status: 200, description: 'Upload found' })
   // @ApiResponse({ status: 404, description: 'Upload not found' })
   async getUpload(@Param('id') id: string) {
-    return this.cdnUploadService.findById(id);
+    const upload = await this.cdnUploadService.findById(id);
+    return buildSuccessResponse(upload);
   }
 
   @Put(':id')
@@ -84,8 +87,8 @@ export class CdnUploadController {
     if (updateDto.expiresAt) {
       updateInput.expiresAt = new Date(updateDto.expiresAt);
     }
-    
-    return this.cdnUploadService.update(id, updateInput);
+        const upload = await this.cdnUploadService.update(id, updateInput);
+    return buildSuccessResponse(upload);
   }
 
   @Post(':id/start')
@@ -97,7 +100,8 @@ export class CdnUploadController {
   // @ApiResponse({ status: 404, description: 'Upload not found' })
   // @ApiResponse({ status: 400, description: 'Upload is not in pending status' })
   async startUpload(@Param('id') id: string) {
-    return this.cdnUploadService.startUpload(id);
+    const upload = await this.cdnUploadService.startUpload(id);
+    return buildSuccessResponse(upload);
   }
 
   @Post(':id/complete')
@@ -112,7 +116,8 @@ export class CdnUploadController {
     @Param('id') id: string,
     @Body() completeDto: CompleteUploadDto
   ) {
-    return this.cdnUploadService.completeUpload(id, completeDto);
+    const upload = await this.cdnUploadService.completeUpload(id, completeDto);
+    return buildSuccessResponse(upload);
   }
 
   @Post(':id/finalize')
@@ -124,7 +129,8 @@ export class CdnUploadController {
   // @ApiResponse({ status: 404, description: 'Upload not found' })
   // @ApiResponse({ status: 400, description: 'Upload is not in processing status' })
   async finalizeUpload(@Param('id') id: string) {
-    return this.cdnUploadService.finalizeUpload(id);
+    const upload = await this.cdnUploadService.finalizeUpload(id);
+    return buildSuccessResponse(upload);
   }
 
   @Post(':id/fail')
@@ -138,7 +144,8 @@ export class CdnUploadController {
     @Param('id') id: string,
     @Body() failDto: FailUploadDto
   ) {
-    return this.cdnUploadService.failUpload(id, failDto.errorMessage);
+    const upload = await this.cdnUploadService.failUpload(id, failDto.errorMessage);
+    return buildSuccessResponse(upload);
   }
 
   @Post(':id/signed-url')
@@ -154,7 +161,7 @@ export class CdnUploadController {
     @Body() signedUrlDto: GenerateSignedUrlDto
   ) {
     const signedUrl = await this.cdnUploadService.generateSignedUrl(id, signedUrlDto.expiryMinutes);
-    return { signedUrl };
+    return buildSuccessResponse({ signedUrl });
   }
 
   @Post(':id/analytics')
@@ -169,7 +176,7 @@ export class CdnUploadController {
     @Body() analyticsDto: UpdateUploadAnalyticsDto
   ) {
     await this.cdnUploadService.updateAnalytics(id, analyticsDto);
-    return { message: 'Analytics updated successfully' };
+    return buildMessageResponse('Analytics updated successfully');
   }
 
   @Delete(':id')
@@ -182,7 +189,7 @@ export class CdnUploadController {
   // @ApiResponse({ status: 400, description: 'Cannot delete upload in progress' })
   async deleteUpload(@Param('id') id: string) {
     await this.cdnUploadService.delete(id);
-    return { message: 'Upload deleted successfully' };
+    return buildMessageResponse('Upload deleted successfully');
   }
 
   @Get()
@@ -201,7 +208,8 @@ export class CdnUploadController {
   // @ApiQuery({ name: 'sortOrder', required: false, description: 'Sort order' })
   // @ApiResponse({ status: 200, description: 'Uploads retrieved successfully' })
   async getUploads(@Query() queryDto: UploadQueryDto) {
-    return this.cdnUploadService.findMany(queryDto);
+    const uploads = await this.cdnUploadService.findMany(queryDto);
+    return buildSuccessResponse(uploads);
   }
 
   @Get('recording/:recordingId')
@@ -210,7 +218,8 @@ export class CdnUploadController {
   // @ApiParam({ name: 'recordingId', description: 'Recording ID' })
   // @ApiResponse({ status: 200, description: 'Uploads retrieved successfully' })
   async getUploadsByRecording(@Param('recordingId') recordingId: string) {
-    return this.cdnUploadService.getUploadsByRecording(recordingId);
+    const uploads = await this.cdnUploadService.getUploadsByRecording(recordingId);
+    return buildSuccessResponse(uploads);
   }
 
   @Get('highlight/:highlightId')
@@ -219,7 +228,8 @@ export class CdnUploadController {
   // @ApiParam({ name: 'highlightId', description: 'Highlight ID' })
   // @ApiResponse({ status: 200, description: 'Uploads retrieved successfully' })
   async getUploadsByHighlight(@Param('highlightId') highlightId: string) {
-    return this.cdnUploadService.getUploadsByHighlight(highlightId);
+    const uploads = await this.cdnUploadService.getUploadsByHighlight(highlightId);
+    return buildSuccessResponse(uploads);
   }
 
   @Get('stats')
@@ -228,6 +238,7 @@ export class CdnUploadController {
   // @ApiQuery({ name: 'uploadedBy', required: false, description: 'Filter by uploader ID' })
   // @ApiResponse({ status: 200, description: 'Upload statistics retrieved successfully' })
   async getUploadStats(@Query() queryDto: UploadStatsDto) {
-    return this.cdnUploadService.getUploadStats(queryDto.uploadedBy);
+    const stats = await this.cdnUploadService.getUploadStats(queryDto.uploadedBy);
+    return buildSuccessResponse(stats);
   }
 }

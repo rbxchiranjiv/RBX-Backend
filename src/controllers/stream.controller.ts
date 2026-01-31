@@ -27,6 +27,7 @@ import {
   StreamStatsDto,
 } from '../dto/stream.dto';
 import { StreamStatus, StreamType } from '../database/entities/stream-session.entity';
+import { buildMessageResponse, buildSuccessResponse } from './http-utils';
 
 // @ApiTags('streams')
 @Controller('streams')
@@ -43,7 +44,8 @@ export class StreamController {
   // @ApiResponse({ status: 401, description: 'Unauthorized' })
   // @ApiResponse({ status: 403, description: 'Forbidden' })
   async createStreamSession(@Body() createDto: CreateStreamSessionDto) {
-    return this.streamSessionService.create(createDto as any);
+    const stream = await this.streamSessionService.create(createDto as any);
+    return buildSuccessResponse(stream);
   }
 
   @Get(':id')
@@ -53,7 +55,8 @@ export class StreamController {
   // @ApiResponse({ status: 200, description: 'Stream session found' })
   // @ApiResponse({ status: 404, description: 'Stream session not found' })
   async getStreamSession(@Param('id') id: string) {
-    return this.streamSessionService.findById(id);
+    const stream = await this.streamSessionService.findById(id);
+    return buildSuccessResponse(stream);
   }
 
   @Put(':id')
@@ -67,7 +70,8 @@ export class StreamController {
     @Param('id') id: string,
     @Body() updateDto: UpdateStreamSessionDto
   ) {
-    return this.streamSessionService.update(id, updateDto as any);
+    const stream = await this.streamSessionService.update(id, updateDto as any);
+    return buildSuccessResponse(stream);
   }
 
   @Post(':id/start')
@@ -79,7 +83,8 @@ export class StreamController {
   // @ApiResponse({ status: 404, description: 'Stream session not found' })
   // @ApiResponse({ status: 400, description: 'Stream is not in pending status' })
   async startStream(@Param('id') id: string) {
-    return this.streamSessionService.startStream(id);
+    const stream = await this.streamSessionService.startStream(id);
+    return buildSuccessResponse(stream);
   }
 
   @Post(':id/end')
@@ -94,7 +99,8 @@ export class StreamController {
     @Param('id') id: string,
     @Body() endDto: EndStreamDto
   ) {
-    return this.streamSessionService.endStream(id, endDto.reason);
+    const stream = await this.streamSessionService.endStream(id, endDto.reason);
+    return buildSuccessResponse(stream);
   }
 
   @Post(':id/viewer-count')
@@ -109,7 +115,7 @@ export class StreamController {
     @Body() updateDto: UpdateViewerCountDto
   ) {
     await this.streamSessionService.updateViewerCount(id, updateDto.viewerCount);
-    return { message: 'Viewer count updated successfully' };
+    return buildMessageResponse('Viewer count updated successfully');
   }
 
   @Post(':id/highlight-markers')
@@ -123,13 +129,14 @@ export class StreamController {
     @Param('id') id: string,
     @Body() markerDto: AddHighlightMarkerDto
   ) {
-    return this.streamSessionService.addHighlightMarker(id, {
+    const marker = await this.streamSessionService.addHighlightMarker(id, {
       timestamp: markerDto.timestamp,
       type: markerDto.type as 'kill' | 'death' | 'win' | 'clutch' | 'ace' | 'multikill' | 'custom',
       description: markerDto.description,
       confidence: markerDto.confidence,
       metadata: markerDto.metadata
     });
+    return buildSuccessResponse(marker);
   }
 
   @Delete(':id')
@@ -142,7 +149,7 @@ export class StreamController {
   // @ApiResponse({ status: 400, description: 'Cannot delete live stream' })
   async deleteStreamSession(@Param('id') id: string) {
     await this.streamSessionService.delete(id);
-    return { message: 'Stream session deleted successfully' };
+    return buildMessageResponse('Stream session deleted successfully');
   }
 
   @Get()
@@ -160,7 +167,8 @@ export class StreamController {
   // @ApiQuery({ name: 'sortOrder', required: false, description: 'Sort order' })
   // @ApiResponse({ status: 200, description: 'Stream sessions retrieved successfully' })
   async getStreamSessions(@Query() queryDto: StreamSessionQueryDto) {
-    return this.streamSessionService.findMany(queryDto);
+    const streams = await this.streamSessionService.findMany(queryDto);
+    return buildSuccessResponse(streams);
   }
 
   @Get('active')
@@ -168,7 +176,8 @@ export class StreamController {
   // @ApiOperation({ summary: 'Get all active streams' })
   // @ApiResponse({ status: 200, description: 'Active streams retrieved successfully' })
   async getActiveStreams() {
-    return this.streamSessionService.getActiveStreams();
+    const streams = await this.streamSessionService.getActiveStreams();
+    return buildSuccessResponse(streams);
   }
 
   @Get('stats/:streamerId')
@@ -178,6 +187,7 @@ export class StreamController {
   // @ApiResponse({ status: 200, description: 'Streamer statistics retrieved successfully' })
   // @ApiResponse({ status: 404, description: 'Streamer not found' })
   async getStreamerStats(@Param('streamerId') streamerId: string) {
-    return this.streamSessionService.getStreamerStats(streamerId);
+    const stats = await this.streamSessionService.getStreamerStats(streamerId);
+    return buildSuccessResponse(stats);
   }
 }
